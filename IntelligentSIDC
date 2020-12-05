@@ -1,0 +1,49 @@
+package com.company;
+
+import java.util.Scanner;
+
+public class IntelligentSIDC { //individual Student class
+    long Key;
+    int Height;
+    IntelligentSIDC left;
+    IntelligentSIDC right;
+    String Value;
+    long Size;
+
+    IntelligentSIDC(){
+        this.Key = generate();
+        this.Height = 1;
+    }
+
+    IntelligentSIDC(long keyBuffer, String valueBuffer) {
+        this.Key = keyBuffer;
+        this.Height = 1;
+        this.Value = valueBuffer;
+    }
+
+    void setKey(long buffer) {
+        this.Key = buffer;
+    }
+
+    long getKey() {
+        return this.Key;
+    }
+
+      void setValue(String value) {
+        this.Value = value;
+    }
+
+    String getValue(){
+        if (this.Value!=null)
+            return this.Value;
+        else
+            return ("There are no info about this student.");
+    }
+
+     long generate() {
+        int min = 10000000;
+        int max = 99999999;
+        return (long) (Math.random() * max + min);
+    }
+}
+

@@ -1,0 +1,25 @@
+package com.company;
+
+public class Main {
+
+    public static void main(String[] args) {
+      
+        Collection SIDC_Collection = new Collection();
+        SIDC_Collection.HeapOrTreeCreation();
+
+        int i = 0;
+        do {
+            IntelligentSIDC Student = new IntelligentSIDC();
+            Student.setValue("Student " + i + " \tKey " + Student.getKey() + "\n");
+            SIDC_Collection.add(Student);
+            i++;
+        } while (i < SIDC_Collection.getSize());
+
+        SIDC_Collection.allKeys();
+        do {
+            IntelligentSIDC Student = new IntelligentSIDC();
+            System.out.println(SIDC_Collection.getValue(Student.getKey()));
+            i--;
+        } while (i >= 0);
+    }
+}

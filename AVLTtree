@@ -1,6 +1,6 @@
 package com.company;
 
-public class AVLTree {
+public class AVLTree extends Collection{
 
     IntelligentSIDC root;
     int Size;

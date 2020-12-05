@@ -8,48 +8,85 @@ public class Collection {
     public IntelligentSIDC student;
     public int size;
 
-    public Collection(){
-        SetSIDCThreshold();
-        this.heap = new Heap(this.size);
-        this.tree = new AVLTree();
-        this.tree.setSize(this.size);
+    public Collection() {
+        this.size = SetSIDCThreshold();
     }
 
-    public Collection(Heap heap, AVLTree tree){
-        this.heap = heap;
-        this.tree = tree;
-    }
-
-    Heap getHeap(){
-        return this.heap;
-    }
-
-    AVLTree getAVLTree(){
-        return this.tree;
-    }
-
-    void SetSIDCThreshold() {
-        System.out.println("Please enter a size between 100 and 500000 included:");
-        Scanner input = new Scanner(System.in);
-        int Size = input.nextInt();
-        if (Size >= 100 && Size <= 500000)
-            this.size = Size;
-        else {
-            System.out.println("The entered size is not correct, try again.");
-            SetSIDCThreshold();
+    void HeapOrTreeCreation() {
+        if (this.size < 1000) {
+            this.heap = new Heap(this.size);
+            this.tree = null;
+        } else {
+            this.tree = new AVLTree(this.size);
+            this.heap = null;
         }
     }
 
-    void allKeys(){
-        heap.heapPrint();
+    public Collection(Heap heap, AVLTree tree) {
+            this.heap = heap;
+            this.tree = tree;
+        }
+
+
+    Heap getHeap() {
+        return this.heap;
     }
 
-    void add(IntelligentSIDC Student){
-        tree.insertNewNode(tree.root,Student.getKey());
-        heap.insert(Student, Student.getValue());
+    AVLTree getAVLTree() {
+        return this.tree;
     }
 
-    void remove(IntelligentSIDC Student){
-        tree.
+    int SetSIDCThreshold() {
+        System.out.println("Please enter a size between 100 and 500000 included:");
+        Scanner input = new Scanner(System.in);
+        // boolean checker = false;
+        int Size = input.nextInt();
+        // do {
+        if (Size >= 100) {
+            if (Size <= 500000) {
+                this.size = Size;
+                //     checker = true;
+            }
+        } else {
+            System.out.println("The entered size is not correct, try again.");
+            SetSIDCThreshold();
+        }
+        //  } while (!checker);
+        return Size;
+    }
+
+    void allKeys() {
+        if (this.tree!=null)
+            this.tree.AVLTreePrint(this.tree.root);
+        if(this.heap!=null)
+            heap.heapPrint();
+    }
+
+    void add(IntelligentSIDC Student) {
+        if (this.tree!=null)
+            tree.insertNewNode(tree.root, Student.getKey());
+        if(this.heap!=null)
+            heap.insert(Student, Student.getStudentValue());
+    }
+
+    void remove(IntelligentSIDC Student) {
+        if(this.heap!=null) {
+            this.heap.remove((int) Student.getKey());
+            this.heap.minHeap();
+        }
+        if(this.tree!=null)
+            this.tree.AVLTreeRemove(Student, Student.getKey());
+    }
+
+    String getValue(long key) {
+        if (this.tree != null)
+            return this.tree.AVLTreeSearch(this.tree.root, key).getStudentValue();
+        if (this.heap != null)
+            return this.heap.heapSearch(key).getStudentValue();
+    return "Both tree and heap are null.";
+    }
+
+    int getSize(){
+        return this.size;
     }
 }

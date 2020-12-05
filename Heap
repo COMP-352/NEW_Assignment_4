@@ -1,8 +1,6 @@
 package com.company;
 
-import javax.swing.*;
-
-public class Heap extends Collection{
+public class Heap{
     IntelligentSIDC[] Heap;
     int Size;
     int maxsize;
@@ -88,11 +86,19 @@ public class Heap extends Collection{
         }
     }
 
-    IntelligentSIDC remove() {
-        IntelligentSIDC popped = Heap[FRONT];
-        Heap[FRONT] = Heap[this.Size--];
-        balance(FRONT);
-        return popped;
+    void remove(int key) {
+       // IntelligentSIDC popped = Heap[key];
+        Heap[key] = Heap[this.Size--];
+        balance(key);
+    }
+
+    IntelligentSIDC heapSearch(long key) {
+        for (int i = 1; i <= this.Size / 2; i++) {
+            if (Heap[i].getKey() == key) {
+                return Heap[i];
+            }
+        }
+        return null;
     }
 
     /*

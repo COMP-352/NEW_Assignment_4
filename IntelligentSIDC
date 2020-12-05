@@ -8,7 +8,7 @@ public class IntelligentSIDC { //individual Student class
     IntelligentSIDC left;
     IntelligentSIDC right;
     String Value;
-    long Size;
+   // long Size;
 
     IntelligentSIDC(){
         this.Key = generate();
@@ -33,7 +33,7 @@ public class IntelligentSIDC { //individual Student class
         this.Value = value;
     }
 
-    String getValue(){
+    String getStudentValue(){
         if (this.Value!=null)
             return this.Value;
         else
@@ -46,4 +46,3 @@ public class IntelligentSIDC { //individual Student class
         return (long) (Math.random() * max + min);
     }
 }
-

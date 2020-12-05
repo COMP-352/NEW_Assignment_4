@@ -1,0 +1,107 @@
+package com.company;
+
+public class AVLTree {
+
+    IntelligentSIDC root;
+    int Size;
+
+    AVLTree(){
+    }
+
+    void setSize(int size){
+        this.Size = size;
+    }
+
+    // returns the height of the tree
+    int getHeight(IntelligentSIDC node) {
+        if (node == null)
+            return 0;
+        return node.Height;
+    }
+
+    int returnMaximum(int x, int y) {
+        return (x > y) ? x : y;
+    }
+
+    // right rotation of the subtree at a node parent
+    IntelligentSIDC switchRight(IntelligentSIDC parent) {
+        IntelligentSIDC child = parent.left;
+        IntelligentSIDC buffer = child.right;
+        child.right = parent;
+        parent.left = buffer;
+
+        parent.Height = returnMaximum(getHeight(parent.left), getHeight(parent.right)) + 1;
+        child.Height = returnMaximum(getHeight(child.left), getHeight(child.right)) + 1;
+
+        // returns the new root
+        return child;
+    }
+
+    IntelligentSIDC switchLeft(IntelligentSIDC parent) {
+        IntelligentSIDC child = parent.right;
+        IntelligentSIDC buffer = child.left;
+        child.left = parent;
+        parent.right = buffer;
+
+        //  Update heights
+        parent.Height = returnMaximum(getHeight(parent.left), getHeight(parent.right)) + 1;
+        child.Height = returnMaximum(getHeight(child.left), getHeight(child.right)) + 1;
+
+        // Return new root
+        return child;
+    }
+
+    int getHeightDiff(IntelligentSIDC node) {
+        if (node == null)
+            return 0;
+        return (getHeight(node.left) - getHeight(node.right));
+    }
+
+    IntelligentSIDC insertNewNode(IntelligentSIDC node, long key) {
+        /* 1.  Perform the normal BST insertion */
+        if (node == null)
+            return (new IntelligentSIDC(key, "new student"));
+
+            if (key < node.Key)
+                node.left = insertNewNode(node.left, key);
+            else if (key > node.Key)
+                node.right = insertNewNode(node.right, key);
+            else // Duplicate keys not allowed
+                return node;
+
+            /* 2. Update height of this ancestor node */
+            node.Height = 1 + returnMaximum(getHeight(node.left),
+                    getHeight(node.right));
+
+        /* 3. Get the balance factor of this ancestor
+              node to check whether this node became
+              unbalanced */
+            int balance = getHeightDiff(node);
+
+            // 4 possible cases
+            if (balance > 1 && key < node.left.Key)
+                return switchRight(node);
+
+            if (balance < -1 && key > node.right.Key)
+                return switchLeft(node);
+
+            if (balance > 1 && key > node.left.Key) {
+                node.left = switchLeft(node.left);
+                return switchRight(node);
+            }
+
+            if (balance < -1 && key < node.right.Key) {
+                node.right = switchRight(node.right);
+                return switchLeft(node);
+            }
+            return node;
+    }
+
+    void AVLTreePrint(IntelligentSIDC node) { // pre order traversal
+        if (node != null) {
+            System.out.print(node.Key + " ");
+            AVLTreePrint(node.left);
+            AVLTreePrint(node.right);
+        }
+    }
+}

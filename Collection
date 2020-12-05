@@ -1,0 +1,55 @@
+package com.company;
+
+import java.util.Scanner;
+
+public class Collection {
+    public Heap heap;
+    public AVLTree tree;
+    public IntelligentSIDC student;
+    public int size;
+
+    public Collection(){
+        SetSIDCThreshold();
+        this.heap = new Heap(this.size);
+        this.tree = new AVLTree();
+        this.tree.setSize(this.size);
+    }
+
+    public Collection(Heap heap, AVLTree tree){
+        this.heap = heap;
+        this.tree = tree;
+    }
+
+    Heap getHeap(){
+        return this.heap;
+    }
+
+    AVLTree getAVLTree(){
+        return this.tree;
+    }
+
+    void SetSIDCThreshold() {
+        System.out.println("Please enter a size between 100 and 500000 included:");
+        Scanner input = new Scanner(System.in);
+        int Size = input.nextInt();
+        if (Size >= 100 && Size <= 500000)
+            this.size = Size;
+        else {
+            System.out.println("The entered size is not correct, try again.");
+            SetSIDCThreshold();
+        }
+    }
+
+    void allKeys(){
+        heap.heapPrint();
+    }
+
+    void add(IntelligentSIDC Student){
+        tree.insertNewNode(tree.root,Student.getKey());
+        heap.insert(Student, Student.getValue());
+    }
+
+    void remove(IntelligentSIDC Student){
+        tree.
+    }
+}
